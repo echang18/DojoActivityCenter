@@ -1,0 +1,65 @@
+@{
+    ViewData["Title"] = "Dojo Activity Center";
+}
+
+@model Plan
+
+<div class="jumbotron">
+    <h1>Dojo Activity Center</h1>
+    <br>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>    
+        <th scope="col">Activity</th>
+        <th scope="col">Date and Time</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Event Coordinator</th>
+        <th scope="col">No. of Participants</th>
+        <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(Plan plan in ViewBag.Plans)
+    {
+        <tr>
+            <td><a href="/view/@plan.PlanId">@plan.PlanTitle</a></td>
+            <td>@plan.PlanStart</td>
+            <td>@plan.PlanDuration @plan.DurationTime</td>
+            <td>@plan.Planner.Name</td>
+            <td>@plan.Attendees.Count()</td>
+            <td>
+            @{
+                if(@ViewBag.UserId == @plan.PlannerId)
+                    {
+                        <a href="/delete/@plan.PlanId" class="btn btn-info">Delete</a>
+                    }
+                    else
+                    {
+                        bool joined = false;
+                        foreach(Join j in @plan.Attendees)
+                        {
+                            if(j.UserId == @ViewBag.UserId)
+                            {
+                                joined = true;
+                            }
+                        }
+                        if(joined)
+                        {
+                            <a href="/leave/@plan.PlanId" class="btn btn-primary">Leave</a>
+                        }
+                        else
+                        {
+                            <a href="/join/@plan.PlanId" class="btn btn-primary">Join</a>
+                        }
+                    } 
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a href="/plan/new" class="btn btn-success">Add New Activity</a>

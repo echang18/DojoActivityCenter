@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "New Activity";
+}
+
+@model Plan
+
+<div class="jumbotron">
+    <h1>Create an Activity</h1>
+    <br>
+    <a href="/home" class="btn btn-success">Home</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+</div>
+<form action="/plan" method="post">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Title:</label>
+                <input type="text" name="PlanTitle" placeholder="Enter your activity" class="form-control" />
+                <span asp-validation-for="PlanTitle"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Date & Time:</label>
+                <input type="datetime-local" name="PlanStart" class="form-control" />
+                <span asp-validation-for="PlanStart"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Duration:</label>
+                <input type="number" name="PlanDuration" class="form-control" />
+                <span asp-validation-for="PlanDuration"></span>
+            </div>
+            <div class="form-group">
+                <span asp-validation-for="DurationTime"></span>
+                <select name = "DurationTime">
+                    <option value=""></option>
+                    <option value="Minutes">Minute(s)</option>
+                    <option value="Hours">Hour(s)</option>
+                    <option value="Days">Day(s)</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            <span asp-validation-for="PlanDescription"></span>
+            <textarea name="PlanDescription" cols="136" rows="10"></textarea>
+        </div>
+    </div>
+    
+    <input type="submit" value="Create Activity" class="btn btn-primary" />
+    
+</form>
